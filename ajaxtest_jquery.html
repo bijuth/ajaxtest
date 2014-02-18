@@ -1,0 +1,71 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.  THIS iS AJAX TEST FOR JQUERY
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">
+            
+            dojo.addOnLoad(function(event){
+                dojo.connect(dojo.byId('uniqueSubmit'), 'onclick', function(event){
+                    dojo.stopEvent(event);
+                    dojo.xhrPost({
+                        form: 'testsummaryform',
+                        handleAs: 'json',
+                        load: function(data) {
+                            
+                            if(success) {
+                                dojo.byId('uniqueResponse').innerHTML ='success' ;
+                            }
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    }) // xhrPost()
+                }); // connect()
+            }); // addOnLoa  
+            
+        </script>
+    </head>
+    <body>
+          <form id="testsummaryform" action="/sm/report/mailing/batchsummary.do">
+
+            <table>
+
+                <tr>
+                    <td><input type="text" name="startDate"></td></tr>
+                <tr> <td><input type="text" name="endDate"></td></tr>
+                <tr> <td><select name="breakDownBy">
+                            <option value="day">day</option>
+                            <option value="week">week</option>
+                            <option value="month">month</option>
+                            <option value="quarter">quarter</option>
+                            <option value="year">year</option>
+                        </select><td></td></tr>
+
+                <tr> <td><select name="mailingIds" multiple="true">
+                            <option value="700">700</option>
+                            <option value="800">800</option>
+                            <option value="900">900</option>                       
+                        </select></td></tr>
+
+                <tr><td><input type="hidden" value="getSummary"></td></tr>
+
+
+                </tr> 
+                <tr>
+                    <td>
+                        <input type="submit" id="uniqueSubmit" name="submit" name="uniqueSubmit">
+                    </td>
+                </tr>
+            </table>  
+        </form>
+        
+        <div id="uniqueResponse">
+            
+        </div>
+    </body>
+</html>
